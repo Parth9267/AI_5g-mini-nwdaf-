@@ -1,0 +1,17 @@
+{
+  "repository": "https://github.com/HenokDanielbfg/5g-testbed-conference",
+  "commit": "d6fae0dbd7cf70343201f9351fe60498b628bb86",
+  "folder": "core dataset/03 Feb 2025 - 18 Feb 2025",
+  "files": {
+    "df_location.csv": {
+      "source": "https://github.com/HenokDanielbfg/5g-testbed-conference/blob/d6fae0dbd7cf70343201f9351fe60498b628bb86/core%20dataset/03%20Feb%202025%20-%2018%20Feb%202025/df_location.csv",
+      "sha256": "a75cb22b8a6046155d6ffdf4c31f21f3835b748e88d81f531f67531c0765254b",
+      "bytes": 41099
+    },
+    "df_reg.csv": {
+      "source": "https://github.com/HenokDanielbfg/5g-testbed-conference/blob/d6fae0dbd7cf70343201f9351fe60498b628bb86/core%20dataset/03%20Feb%202025%20-%2018%20Feb%202025/df_reg.csv",
+      "sha256": "4151c90a6db0b40a938e68ffd8cae3d1b710d65abfcdd9676bc176023f7fc08d",
+      "bytes": 49670
+    }
+  }
+}

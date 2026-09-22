@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="990" viewBox="0 0 1440 990" role="img" aria-labelledby="title desc">
+ <title id="title">Mini NWDAF architecture: training and recorded-event replay</title>
+ <desc id="desc">Authors' CSV data is prepared into device sessions, then used for chronological model training and manual event replay. A subscription callback uses the saved model to predict the next cell. Later events resolve earlier predictions.</desc>
+ <defs>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#608297"/></marker>
+  <style>text{font-family:Arial,sans-serif;fill:#182B49}.label{font-size:13px;font-weight:700;letter-spacing:2px;fill:#087F8C}.heading{font-size:24px;font-weight:700}.body{font-size:18px;fill:#52647B}.code{font-family:monospace;font-size:15px;fill:#087F8C}.arrow{fill:none;stroke:#608297;stroke-width:3;marker-end:url(#arrow)}.box{fill:white;stroke:#D9E3EC;stroke-width:2}</style>
+ </defs>
+ <rect width="1440" height="990" fill="#F5F7FA"/>
+ <rect width="1440" height="9" fill="#087F8C"/>
+ <text x="70" y="60" class="label">MINI NWDAF / SYSTEM ARCHITECTURE</text>
+ <text x="70" y="111" font-size="38" font-weight="700">Learn from history. Predict the next observed cell.</text>
+ <text x="70" y="147" class="body">A small implementation of 5G mobility analytics using the paper authors' recorded testbed data.</text>
+
+ <rect x="70" y="185" width="595" height="125" rx="15" class="box"/>
+ <text x="94" y="218" class="label">01 / SOURCE DATA</text>
+ <text x="94" y="249" class="heading">Authors' published CSV files</text>
+ <text x="94" y="281" class="body">652 location records + 915 registration records</text>
+ <rect x="775" y="185" width="595" height="125" rx="15" class="box"/>
+ <text x="799" y="218" class="label">02 / PREPARATION</text>
+ <text x="799" y="249" class="heading">Clean and separate device sessions</text>
+ <text x="799" y="281" class="body">Order by time · exclude inactivity · identify cell changes</text>
+ <path d="M665 247 H763" class="arrow"/>
+ <path d="M1072 310 V339 H368 V377" class="arrow"/>
+ <path d="M1072 310 V377" class="arrow"/>
+
+ <rect x="52" y="356" width="631" height="537" rx="20" fill="#EAF0F8"/>
+ <rect x="757" y="356" width="631" height="537" rx="20" fill="#E4F1EF"/>
+ <text x="77" y="381" class="label">TRAIN ONCE</text>
+ <text x="782" y="381" class="label">RUN THE DEMONSTRATION</text>
+ <rect x="70" y="398" width="595" height="130" rx="14" class="box"/>
+ <text x="94" y="433" class="heading">Chronological training and evaluation</text>
+ <text x="94" y="466" class="body">67 training examples / 30 test examples / 1 purged</text>
+ <text x="94" y="500" class="code">preprocessing.py → train.py</text>
+ <rect x="775" y="398" width="595" height="130" rx="14" class="box"/>
+ <text x="799" y="433" class="heading">Replay held-out recorded events</text>
+ <text x="799" y="466" class="body">Subscribe · Next event · Advance 10 · Unsubscribe</text>
+ <text x="799" y="500" class="code">event_engine.py / publisher + subscription bus</text>
+
+ <path d="M368 528 V565" class="arrow"/>
+ <path d="M1072 528 V565" class="arrow"/>
+ <rect x="70" y="578" width="595" height="130" rx="14" class="box"/>
+ <text x="94" y="613" class="heading">Models and saved prediction artifact</text>
+ <text x="94" y="646" class="body">Baseline · Decision Tree · Gradient Boosting</text>
+ <text x="94" y="680" class="code">models/gradient_boosting.joblib</text>
+ <rect x="775" y="578" width="595" height="130" rx="14" class="box"/>
+ <text x="799" y="613" class="heading">Analytics callback → next-cell forecast</text>
+ <text x="799" y="646" class="body">Uses device ID, current cell, previous cell and time</text>
+ <text x="799" y="680" class="code">event_engine.py + predictor.py</text>
+ <path d="M665 643 H763" class="arrow"/>
+ <text x="684" y="626" font-size="13" fill="#52647B">inference</text>
+
+ <path d="M368 708 V746" class="arrow"/>
+ <path d="M1072 708 V746" class="arrow"/>
+ <rect x="70" y="760" width="595" height="112" rx="14" class="box"/>
+ <text x="94" y="795" class="heading">Reproducible results</text>
+ <text x="94" y="828" class="body">Accuracy · macro-F1 · confusion matrices · test outputs</text>
+ <text x="94" y="853" class="code">results/ + Model lab</text>
+ <rect x="775" y="760" width="595" height="112" rx="14" class="box"/>
+ <text x="799" y="795" class="heading">Interactive Streamlit dashboard</text>
+ <text x="799" y="828" class="body">Later observations reveal whether forecasts were right</text>
+ <text x="799" y="853" class="code">app.py / Overview + Event replay + Model lab</text>
+
+ <text x="70" y="934" font-size="19" font-weight="700">Scope: recorded-data replay, not live phone tracking or a deployed 5G core.</text>
+ <text x="70" y="964" class="body">Past-only inputs · No future labels in replay events · No scoring across observed registration boundaries</text>
+</svg>
