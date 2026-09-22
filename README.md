@@ -19,7 +19,8 @@ There are two separate stages:
 
 ### 1. Learn from old records (training)
 
-`download_data.py` downloads the authors' location and registration files.
+The authors' location and registration files are included in [`dataset/`](dataset/).
+`download_data.py` can restore the same files from their original source if needed.
 `preprocessing.py` sorts the observations by device and time and separates
 registration sessions. `train.py` then teaches the models using earlier records
 and tests them using later records. The trained prediction model is saved locally.
@@ -78,7 +79,7 @@ system requires its network testbed to run and produce live notifications.
 On a new computer, follow **Quick start** below in this order:
 
 1. Install Python and the packages in `requirements.txt`.
-2. Run `download_data.py` once to get the authors' data.
+2. Use the authors' CSVs already included in `dataset/`.
 3. Run `train.py` once to create the trained model and evaluation results.
 4. Run `python -m streamlit run app.py` to start the dashboard.
 5. Open **Event replay → Subscribe → Advance 10** to demonstrate it.
@@ -182,8 +183,9 @@ cd AI_5g-mini-nwdaf-
 ```
 
 **Python 3.12 recommended** (the version used for verification). Runs locally on
-Windows, Linux or macOS. Internet is needed for package installation and the
-one-time dataset download; no API keys or paid services are required.
+Windows, Linux or macOS. Internet is needed for package installation. The dataset
+is included, so training and demonstration can run offline afterward. No API keys
+or paid services are required.
 
 ### Windows PowerShell
 
@@ -192,7 +194,6 @@ From the project folder:
 ```powershell
 py -3.12 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
-.\.venv\Scripts\python.exe download_data.py
 .\.venv\Scripts\python.exe train.py
 .\.venv\Scripts\python.exe -m streamlit run app.py
 ```
@@ -206,13 +207,14 @@ After setup, you can double-click **`START_WINDOWS.cmd`**.
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.txt
-python download_data.py
 python train.py
 python -m streamlit run app.py
 ```
 
 Open **http://localhost:8501**. Keep the terminal running. Stop with Ctrl+C.
-If data or models are missing, the app also offers download and train buttons.
+The original CSVs are bundled in `dataset/`. If they are missing, run
+`python download_data.py` to restore them. The app also offers download and train
+buttons when the respective files are missing.
 
 `requirements-lock.txt` records the complete environment used for the checked
 results. To reproduce those exact package versions on Python 3.12, install it
@@ -362,7 +364,7 @@ Tests cover identifier preservation, conflicting timestamps, registration
 boundaries, removal of future training labels, subscription filtering,
 unsubscribe behavior, deferred forecast scoring, real-data/replay consistency,
 and all four Streamlit pages. Data/model-dependent tests skip in a source-only
-checkout until the download and training steps have run.
+checkout until the training step has run.
 
 ## Project structure
 
@@ -378,7 +380,8 @@ mini-nwdaf/
 ├── START_WINDOWS.cmd        # Convenient local launcher
 ├── requirements.txt
 ├── requirements-lock.txt
-├── data/                    # Documentation, manifest; raw CSVs ignored by Git
+├── dataset/                 # Original CSVs used by the app, plus source references
+├── data/                    # Data interpretation notes and source checksum manifest
 ├── models/                  # Locally generated model; ignored by Git
 ├── results/                 # Reproducible metrics and held-out predictions
 ├── docs/DEMO_GUIDE.md        # Presentation and viva preparation
@@ -392,7 +395,7 @@ Repository: [Parth9267/AI_5g-mini-nwdaf-](https://github.com/Parth9267/AI_5g-min
 
 1. Fill in the student-details table before assessment submission.
 2. Include source, tests, README, docs, architecture images, screenshots and results.
-3. Keep `.venv`, `__pycache__`, `data/raw`, `tmp`, and generated model binaries out
+3. Keep `.venv`, `__pycache__`, `tmp`, and generated model binaries out
    of the repository; `.gitignore` already handles them.
 4. Follow the quick start on the computer used for the demonstration.
 
@@ -401,13 +404,14 @@ of its `mini-nwdaf` folder**, not just the ZIP file. `README.md` and `app.py` sh
 appear at the top level of the GitHub repository. Include the `.streamlit` folder
 and `.gitignore` file as well as the visible source files and subfolders.
 
-The ZIP contains the code, instructions, source manifest, screenshot, tests and
-evaluation results. It deliberately excludes the Python environment, downloaded
-raw data and generated model. Running the setup steps recreates those locally.
+The ZIP contains the code, original CSV dataset, instructions, source manifest,
+screenshots, tests and evaluation results. It excludes the Python environment
+and generated model. Running the setup steps recreates those locally.
 
-The two original CSVs are downloaded from the authors on setup rather than
-bundled into your GitHub repository. Their data and code remain attributable to
-their respective authors. This project does not relicense those materials.
+The two original CSVs are included in [`dataset/`](dataset/) with references to
+the authors' repository and exact source commit. Their data and code remain
+attributable to their respective authors. This project does not relicense those
+materials.
 
 ## Limitations and possible future work
 

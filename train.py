@@ -10,7 +10,7 @@ from sklearn.metrics import accuracy_score, f1_score, confusion_matrix, classifi
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.tree import DecisionTreeClassifier
-from preprocessing import ROOT, CATEGORICAL, NUMERIC, FEATURES, load_dataset, temporal_split
+from preprocessing import ROOT, DATASET_DIR, CATEGORICAL, NUMERIC, FEATURES, load_dataset, temporal_split
 
 
 class TransitionBaseline:
@@ -50,7 +50,7 @@ def train_project():
               "demo_model": "Gradient Boosting",
               "selection_policy": "Gradient Boosting fixed in advance from the paper; no test-set selection.",
               "source_sha256": {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
-                                for p in (ROOT / "data" / "raw").glob("*.csv")}}
+                                for p in DATASET_DIR.glob("*.csv")}}
     predictions = test[["time", "target_time", "supi", "previous_cell", "current_cell", "next_cell"]].copy()
     for name, model in estimators.items():
         model.fit(train[FEATURES], train.next_cell)

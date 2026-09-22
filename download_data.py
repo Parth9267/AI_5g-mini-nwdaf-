@@ -13,7 +13,7 @@ FOLDER = "core dataset/03 Feb 2025 - 18 Feb 2025"
 
 
 def download():
-    destination = ROOT / "data" / "raw"
+    destination = ROOT / "dataset"
     destination.mkdir(parents=True, exist_ok=True)
     manifest = {"repository": f"https://github.com/{REPO}", "commit": COMMIT,
                 "folder": FOLDER, "files": {}}

@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parent
+DATASET_DIR = ROOT / "dataset"
 CATEGORICAL = ["supi", "current_cell", "previous_cell", "time_period"]
 NUMERIC = ["hour_sin", "hour_cos"]
 FEATURES = CATEGORICAL + NUMERIC
@@ -103,7 +104,7 @@ def temporal_split(examples, train_fraction=0.7):
 
 
 def load_dataset(raw_dir=None):
-    folder = Path(raw_dir) if raw_dir else ROOT / "data" / "raw"
+    folder = Path(raw_dir) if raw_dir else DATASET_DIR
     locations = pd.read_csv(folder / "df_location.csv", dtype=str)
     registrations = pd.read_csv(folder / "df_reg.csv", dtype=str)
     clean = clean_locations(locations)

@@ -5,7 +5,7 @@ from preprocessing import ROOT
 
 pytestmark = pytest.mark.skipif(
     not (ROOT / "models" / "gradient_boosting.joblib").exists(),
-    reason="Run download_data.py and train.py first")
+    reason="Run train.py first (the source dataset is bundled)")
 
 
 def button(app, label):

@@ -8,7 +8,7 @@ import streamlit as st
 from analytics import transitions
 from event_engine import ReplaySession, to_events
 from predictor import Predictor
-from preprocessing import ROOT, load_dataset
+from preprocessing import ROOT, DATASET_DIR, load_dataset
 
 st.set_page_config(page_title="Mini NWDAF | Mobility Intelligence", page_icon="📡", layout="wide")
 st.markdown("""<style>
@@ -83,7 +83,7 @@ with st.sidebar:
     st.markdown('<span class="tag">LOCAL · EDUCATIONAL PROTOTYPE</span>', unsafe_allow_html=True)
     st.caption("UE = device · gNB = base station\n\nA handover moves a connection to another cell.")
 
-if not all((ROOT / "data" / "raw" / name).exists() for name in ["df_location.csv", "df_reg.csv"]):
+if not all((DATASET_DIR / name).exists() for name in ["df_location.csv", "df_reg.csv"]):
     st.title("Set up your research dataset")
     st.info("Download the two original CSV files from the authors' repository. No synthetic data is generated.")
     if st.button("Download authors' dataset", type="primary"):
@@ -96,7 +96,7 @@ if not all((ROOT / "data" / "raw" / name).exists() for name in ["df_location.csv
             st.error(f"Download failed: {error}. You can also run: python download_data.py")
     st.stop()
 
-signature = tuple((ROOT / "data" / "raw" / name).stat().st_mtime_ns for name in ["df_location.csv", "df_reg.csv"])
+signature = tuple((DATASET_DIR / name).stat().st_mtime_ns for name in ["df_location.csv", "df_reg.csv"])
 try:
     locations, visits, examples, stats = read_data(signature)
 except (ValueError, OSError) as error:

@@ -1,4 +1,5 @@
-"""Tests against the downloaded research data (skip in a source-only checkout)."""
+"""Tests against the bundled research data (train the model first)."""
+import hashlib
 import json
 import pandas as pd
 import pytest
@@ -8,7 +9,7 @@ from predictor import Predictor
 
 pytestmark = pytest.mark.skipif(
     not (ROOT / "models" / "gradient_boosting.joblib").exists(),
-    reason="Run download_data.py and train.py first")
+    reason="Run train.py first (the source dataset is bundled)")
 
 
 def test_real_data_split_contains_no_future_training_labels():
@@ -19,6 +20,13 @@ def test_real_data_split_contains_no_future_training_labels():
     assert train.target_time.max() < cutoff <= test.time.min()
     assert (examples.target_time > examples.time).all()
     assert (examples.next_cell != examples.current_cell).all()
+
+
+def test_bundled_dataset_matches_original_source_checksums():
+    manifest = json.loads((ROOT / "data" / "manifest.json").read_text())
+    for name, metadata in manifest["files"].items():
+        source = ROOT / "dataset" / name
+        assert hashlib.sha256(source.read_bytes()).hexdigest() == metadata["sha256"]
 
 
 def test_event_replay_matches_saved_holdout_predictions():
